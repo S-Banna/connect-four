@@ -1,20 +1,21 @@
+#include "checkWin.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include "checkWin.h"
 
 #define ROWS 6
 #define COLS 7
 
-int **allocBoard(int rows, int cols);
-void freeBoard(int **board, int rows);
-void resetBoard(int **board, int rows, int cols);
-void printBoard(int **board, int rows, int cols);
-int isValidColumn(int **board, int rows, int cols, int col);
-int dropChecker(int **board, int rows, int col, int player, int *outRow);
+int** allocBoard(int rows, int cols);
+void freeBoard(int** board, int rows);
+void resetBoard(int** board, int rows, int cols);
+void printBoard(int** board, int rows, int cols);
+int isValidColumn(int** board, int rows, int cols, int col);
+int dropChecker(int** board, int rows, int col, int player, int* outRow);
 
 int main(void) {
-    int **board = allocBoard(ROWS, COLS);
-    if (!board) return 1;
+    int** board = allocBoard(ROWS, COLS);
+    if (!board)
+        return 1;
 
     int currentPlayer;
     int moves;
@@ -83,13 +84,15 @@ int main(void) {
     return 0;
 }
 
-int **allocBoard(int rows, int cols) {
-    int **board = (int **)calloc(rows, sizeof(int *));
-    if (!board) return NULL;
+int** allocBoard(int rows, int cols) {
+    int** board = (int**)calloc(rows, sizeof(int*));
+    if (!board)
+        return NULL;
     for (int r = 0; r < rows; r++) {
-        board[r] = (int *)calloc(cols, sizeof(int));
+        board[r] = (int*)calloc(cols, sizeof(int));
         if (!board[r]) {
-            for (int i = 0; i < r; i++) free(board[i]);
+            for (int i = 0; i < r; i++)
+                free(board[i]);
             free(board);
             return NULL;
         }
@@ -97,44 +100,52 @@ int **allocBoard(int rows, int cols) {
     return board;
 }
 
-void freeBoard(int **board, int rows) {
-    if (!board) return;
-    for (int r = 0; r < rows; r++) free(board[r]);
+void freeBoard(int** board, int rows) {
+    if (!board)
+        return;
+    for (int r = 0; r < rows; r++)
+        free(board[r]);
     free(board);
 }
 
-void resetBoard(int **board, int rows, int cols) {
+void resetBoard(int** board, int rows, int cols) {
     for (int r = 0; r < rows; r++)
         for (int c = 0; c < cols; c++)
             board[r][c] = 0;
 }
 
-void printBoard(int **board, int rows, int cols) {
+void printBoard(int** board, int rows, int cols) {
     printf("\n");
     for (int r = 0; r < rows; r++) {
         for (int c = 0; c < cols; c++) {
             char symbol;
-            if (board[r][c] == 0) symbol = '.';
-            else if (board[r][c] == 1) symbol = 'A';
-            else symbol = 'B';
+            if (board[r][c] == 0)
+                symbol = '.';
+            else if (board[r][c] == 1)
+                symbol = 'A';
+            else
+                symbol = 'B';
             printf("%c ", symbol);
         }
         printf("\n");
     }
-    for (int c = 1; c <= cols; c++) printf("%d ", c);
+    for (int c = 1; c <= cols; c++)
+        printf("%d ", c);
     printf("\n\n");
 }
 
-int isValidColumn(int **board, int rows, int cols, int col) {
-    if (col < 0 || col >= cols) return 0;
+int isValidColumn(int** board, int rows, int cols, int col) {
+    if (col < 0 || col >= cols)
+        return 0;
     return (board[0][col] == 0);
 }
 
-int dropChecker(int **board, int rows, int col, int player, int *outRow) {
+int dropChecker(int** board, int rows, int col, int player, int* outRow) {
     for (int r = rows - 1; r >= 0; r--) {
         if (board[r][col] == 0) {
             board[r][col] = player;
-            if (outRow) *outRow = r;
+            if (outRow)
+                *outRow = r;
             return 1;
         }
     }

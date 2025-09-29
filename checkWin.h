@@ -1,1 +1,2 @@
-Boolean checkWin(Char, int, int, Char[][])
+int checkWin(int**, int, int, int);
+int checkDirection(int**, int, int, int, int, int);
