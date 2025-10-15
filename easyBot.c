@@ -2,7 +2,7 @@
 #include <time.h>
 #include "easyBot.h"
 
-int easyBot(int maxcolumn, int mincolumn) {
-    int rand_num = (rand() % (maxcolumn - mincolumn + 1)) + mincolumn;
+int easyBot(int maxColumn, int minColumn) {
+    int rand_num = (rand() % (maxColumn - minColumn + 1)) + minColumn;
     return rand_num;
 }
