@@ -54,7 +54,7 @@ int main(void) {
             int placedRow;
             dropChecker(board, ROWS, col, currentPlayer, &placedRow);
 
-            if (checkWin(board, placedRow, col, currentPlayer)) {
+            if (checkWin(board, placedRow, col, currentPlayer, ROWS, COLS)) {
                 printBoard(board, ROWS, COLS);
                 printf("Player %c WINS!\n", playerChar);
                 won = 1;

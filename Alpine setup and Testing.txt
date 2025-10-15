@@ -1,0 +1,8 @@
+Alpine setup:
+install Alpine Linux iso and install into a virtual machine. setup-alpine
+clone the github repo into Linux and compile the code.
+edit /etc/inittab: set tty1 to run the compiled code on startup once
+
+Testing:
+check edge cases (inputs less than 1 or more than 7, or non integer inputs)
+test checkWin condition with series of games
