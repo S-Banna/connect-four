@@ -13,6 +13,8 @@ int isValidColumn(int** board, int rows, int cols, int col);
 int dropChecker(int** board, int rows, int col, int player, int* outRow);
 
 int main(void) {
+    setbuf(stdout, NULL); // necessary for prints to work in some linux distributions
+
     int** board = allocBoard(ROWS, COLS);
     if (!board)
         return 1;
