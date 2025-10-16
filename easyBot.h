@@ -1,1 +1,1 @@
-int easyBot(int[], int);
+int easyBot(int, int);
