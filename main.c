@@ -24,18 +24,18 @@ int main(void) {
     int won;
     char again;
 
-    int vsBot = 0;
-    char botChoice;
-    printf("Play against bot? (y/n): ");
-    if (scanf(" %c", &botChoice) == 1 && (botChoice == 'y' || botChoice == 'Y')) {
-        vsBot = 1;
-    }
-
     do {
         resetBoard(board, ROWS, COLS);
         currentPlayer = 1;
         moves = 0;
         won = 0;
+
+        int vsBot = 0;
+        char botChoice;
+        printf("Play against bot? (y/n): ");
+        if (scanf(" %c", &botChoice) == 1 && (botChoice == 'y' || botChoice == 'Y')) {
+            vsBot = 1;
+        }
 
         while (moves < ROWS * COLS && !won) {
             printBoard(board, ROWS, COLS);
