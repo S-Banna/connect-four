@@ -13,7 +13,7 @@ int isValidColumn(int** board, int rows, int cols, int col);
 int dropChecker(int** board, int rows, int col, int player, int* outRow);
 
 int main(void) {
-    setbuf(stdout, NULL); // necessary for prints to work in some linux distributions
+    setbuf(stdout, NULL);
 
     int** board = allocBoard(ROWS, COLS);
     if (!board)
@@ -23,6 +23,13 @@ int main(void) {
     int moves;
     int won;
     char again;
+
+    int vsBot = 0;
+    char botChoice;
+    printf("Play against bot? (y/n): ");
+    if (scanf(" %c", &botChoice) == 1 && (botChoice == 'y' || botChoice == 'Y')) {
+        vsBot = 1;
+    }
 
     do {
         resetBoard(board, ROWS, COLS);
@@ -41,10 +48,18 @@ int main(void) {
             }
 
             int colInput;
-            printf("Player %c, choose column (1-%d): ", playerChar, COLS);
-            if (scanf("%d", &colInput) != 1) {
-                freeBoard(board, ROWS);
-                return 1;
+
+            if (vsBot && currentPlayer == 2) {
+                do {
+                    colInput = easyBot(COLS, 1);
+                } while (!isValidColumn(board, ROWS, COLS, colInput - 1));
+                printf("Bot (Player %c) chooses column %d\n", playerChar, colInput);
+            } else {
+                printf("Player %c, choose column (1-%d): ", playerChar, COLS);
+                if (scanf("%d", &colInput) != 1) {
+                    freeBoard(board, ROWS);
+                    return 1;
+                }
             }
 
             int col = colInput - 1;
