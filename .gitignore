@@ -5,3 +5,22 @@ app.exe
 
 .DS_Store
 ./.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+
+# text files not needed on git but necessary for submission
+
+github.txt
+./github.txt
+*/github.txt
+*/*/github.txt
+
+Alpine.txt
+./Alpine.txt
+*/Alpine.txt
+*/*/Alpine.txt
+
+easyBot.txt
+./easyBot.txt
+*/easyBot.txt
+*/*/easyBot.txt

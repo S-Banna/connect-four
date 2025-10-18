@@ -1,3 +1,0 @@
-team: #include <team.h>
-
-github: https://github.com/S-Banna/connect-four
