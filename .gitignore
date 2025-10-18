@@ -2,3 +2,6 @@ app
 app.exe
 ./app.exe
 ./app
+
+.DS_Store
+./.DS_Store
