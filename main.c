@@ -66,9 +66,16 @@ int main(void) {
             int colInput;
 
             if (vsBot && currentPlayer == 2) {
-                do {
-                    colInput = (botDifficulty == 1 ? easyBot(COLS, 1) : mediumBot(board, COLS, 1));
-                } while (!isValidColumn(board, ROWS, COLS, colInput - 1));
+                int validColumns[7];
+                int numValid = 0;
+                for (int i = 0; i < 7; i++) {
+                    if (isValidColumn(board, ROWS, COLS, i)) { 
+                        validColumns[numValid] = i;
+                        numValid++;
+                    }
+                }
+
+                colInput = (botDifficulty == 1 ? easyBot(numValid, 1, validColumns) : mediumBot(board, COLS, ROWS, 1, validColumns, numValid));
                 printf("Bot (Player %c) chooses column %d\n", playerChar, colInput);
             } else {
                 printf("Player %c, choose column (1-%d): ", playerChar, COLS);

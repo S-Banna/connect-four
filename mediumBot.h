@@ -1,3 +1,4 @@
-int mediumBot(int**, int, int);
+int mediumBot(int**, int, int, int, int*, int);
 int findWin(int**, int, int);
 int blockWin(int**, int, int);
+int winCheck(int**, int, int, int);
