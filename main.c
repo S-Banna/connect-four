@@ -1,7 +1,8 @@
-#include "checkWin.h"
 #include <stdio.h>
 #include <stdlib.h>
+#include "checkWin.h"
 #include "easyBot.h"
+#include "mediumBot.h"
 #define ROWS 6
 #define COLS 7
 
@@ -31,10 +32,25 @@ int main(void) {
         won = 0;
 
         int vsBot = 0;
-        char botChoice;
+        int botDifficulty = 0;
+        char botChoice, botDiffChoice;
         printf("Play against bot? (y/n): ");
         if (scanf(" %c", &botChoice) == 1 && (botChoice == 'y' || botChoice == 'Y')) {
             vsBot = 1;
+
+            printf("Choose bot difficulty, easy or medium (e/m): ");
+            if (scanf(" %c", &botDiffChoice) == 1) {
+                if (botDiffChoice == 'e' || botDiffChoice == 'E') {
+                    botDifficulty = 1;
+                    printf("Easy bot selected.\n");
+                } else if (botDiffChoice == 'm' || botDiffChoice == 'M') {
+                    botDifficulty = 2;
+                    printf("Medium bot selected.\n");
+                } else {
+                    botDifficulty = 1;
+                    printf("Invalid choice. Defaulting to easy bot.\n");
+                }
+            }
         }
 
         while (moves < ROWS * COLS && !won) {
@@ -51,7 +67,7 @@ int main(void) {
 
             if (vsBot && currentPlayer == 2) {
                 do {
-                    colInput = easyBot(COLS, 1);
+                    colInput = (botDifficulty == 1 ? easyBot(COLS, 1) : mediumBot(board, COLS, 1));
                 } while (!isValidColumn(board, ROWS, COLS, colInput - 1));
                 printf("Bot (Player %c) chooses column %d\n", playerChar, colInput);
             } else {
