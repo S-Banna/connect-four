@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <time.h>
 #include "checkWin.h"
 #include "easyBot.h"
 #include "mediumBot.h"
@@ -15,6 +16,7 @@ int dropChecker(int** board, int rows, int col, int player, int* outRow);
 
 int main(void) {
     setbuf(stdout, NULL);
+    srand(time(NULL));
 
     int** board = allocBoard(ROWS, COLS);
     if (!board)
@@ -68,8 +70,8 @@ int main(void) {
             if (vsBot && currentPlayer == 2) {
                 int validColumns[7];
                 int numValid = 0;
-                for (int i = 0; i < 7; i++) {
-                    if (isValidColumn(board, ROWS, COLS, i)) { 
+                for (int i = 1; i <= 7; i++) {
+                    if (isValidColumn(board, ROWS, COLS, i - 1)) { 
                         validColumns[numValid] = i;
                         numValid++;
                     }
