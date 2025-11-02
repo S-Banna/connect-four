@@ -52,5 +52,52 @@ int blockWin(int** board, int rows, int cols) {
 
 // mediumBot placeholder - to be implemented by friend
 int mediumBot(int** board, int rows, int cols, int player, int* validColumns, int validCount) {
-    return 0; // placeholder
+     /* Keeps track whether we've seen the first blocking opportunity already.
+       This persists between calls during program execution. */
+    static int seenFirstThreat = 0;
+
+    /* 1) If the bot can win now, take that move immediately. */
+    int winCol = findWin(board, rows, cols); /* 1-based column or 0 */
+    if (winCol != 0) {
+        /* double-check it's still valid (convert to 0-based for isValidColumn) */
+        if (isValidColumn(board, rows, cols, winCol - 1))
+            return winCol;
+    }
+
+    /* 2) See if the opponent has a direct win; decide whether to block. */
+    int blockCol = blockWin(board, rows, cols); /* 1-based column or 0 */
+    if (blockCol != 0) {
+        int chancePct;
+        if (!seenFirstThreat) {
+            chancePct = 90;      /* first time -> 90% chance to block */
+            seenFirstThreat = 1; /* mark that we've encountered the first threat */
+        } else {
+            chancePct = 50;      /* subsequent times -> 50% chance to block */
+        }
+
+        /* roll 0..99 */
+        int roll = rand() % 100;
+        if (roll < chancePct) {
+            if (isValidColumn(board, rows, cols, blockCol - 1))
+                return blockCol;
+            /* if blockCol somehow no longer valid, fall through to random pick */
+        }
+        /* if roll >= chancePct, we intentionally do not block this time */
+    }
+
+    /* 3) No win or decided not to block -> pick a random valid column using easyBot.
+          easyBot expects (maxColumn, minColumn, validColumns) where minColumn is 1
+          according to the version you gave. */
+    if (validCount > 0 && validColumns != NULL) {
+        return easyBot(validCount, 1, validColumns);
+    }
+
+    /* 4) Fallback: scan for any valid column and return the first (1-based) */
+    for (int c = 0; c < cols; ++c) {
+        if (isValidColumn(board, rows, cols, c))
+            return c + 1;
+    }
+
+    /* If board is full or something unexpected happened, return 1 as a last resort. */
+    return 1;
 }
