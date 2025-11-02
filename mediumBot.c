@@ -3,6 +3,13 @@
 #include "easyBot.h" // uses easyBot's implementation of random when no blocks/wins available
 #include "checkWin.h"
 
+static int isValidColumn(int** board, int rows, int cols, int col) {
+    if (col < 0 || col >= cols)
+        return 0;
+    return (board[0][col] == 0);
+}
+
+
 int potentialWin(int** board, int rows, int cols, int player) {
     for (int col = 0; col < cols; col++) {
         int row = -1;

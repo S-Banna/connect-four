@@ -77,7 +77,7 @@ int main(void) {
                     }
                 }
 
-                colInput = (botDifficulty == 1 ? easyBot(numValid, 1, validColumns) : mediumBot(board, COLS, ROWS, 1, validColumns, numValid));
+                colInput = (botDifficulty == 1 ? easyBot(numValid, 1, validColumns) : mediumBot(board, ROWS, COLS, 1, validColumns, numValid));
                 printf("Bot (Player %c) chooses column %d\n", playerChar, colInput);
             } else {
                 printf("Player %c, choose column (1-%d): ", playerChar, COLS);
