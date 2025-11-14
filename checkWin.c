@@ -1,7 +1,7 @@
 #include "checkWin.h"
 
 void* checkDirectionThread(void* args) {
-    ThreadArgs* t = (ThreadArgs*)args;
+    ThreadArgs* t = (ThreadArgs*) args;
     t->result = checkDirection(t->board, t->row, t->column, t->player, t->x, t->y, t->ROWS, t->COLS);
     return NULL;
 }
