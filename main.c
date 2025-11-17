@@ -15,8 +15,8 @@ int isValidColumn(int** board, int rows, int cols, int col);
 int dropChecker(int** board, int rows, int col, int player, int* outRow);
 
 int main(void) {
-    setbuf(stdout, NULL);
-    srand(time(NULL));
+    setbuf(stdout, NULL); // remove input buffer for print compatibility on Linux
+    srand(time(NULL)); // set a randomization seed for bot implementations
 
     int** board = allocBoard(ROWS, COLS);
     if (!board)
