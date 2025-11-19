@@ -160,9 +160,8 @@ void printBoard(int** board, int rows, int cols) {
     printf("\n");
     for (int r = 0; r < rows; r++) {
         for (int c = 0; c < cols; c++) {
-            char symbol;
             if (board[r][c] == 0)
-                symbol = '.';
+                printf(". ");
             else if (board[r][c] == 1)
                 printf("\033[34mA\033[0m ");
             else
