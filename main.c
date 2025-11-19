@@ -40,7 +40,7 @@ int main(void) {
         if (scanf(" %c", &botChoice) == 1 && (botChoice == 'y' || botChoice == 'Y')) {
             vsBot = 1;
 
-            printf("Choose bot difficulty, easy or medium (e/m): ");
+            printf("Choose bot difficulty, easy or medium or hard (e/m/h): ");
             if (scanf(" %c", &botDiffChoice) == 1) {
                 if (botDiffChoice == 'e' || botDiffChoice == 'E') {
                     botDifficulty = 1;
@@ -164,10 +164,9 @@ void printBoard(int** board, int rows, int cols) {
             if (board[r][c] == 0)
                 symbol = '.';
             else if (board[r][c] == 1)
-                symbol = 'A';
+                printf("\033[34mA\033[0m ");
             else
-                symbol = 'B';
-            printf("%c ", symbol);
+                printf("\033[31mB\033[0m ");
         }
         printf("\n");
     }
