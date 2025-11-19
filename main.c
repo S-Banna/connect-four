@@ -15,8 +15,8 @@ int isValidColumn(int** board, int rows, int cols, int col);
 int dropChecker(int** board, int rows, int col, int player, int* outRow);
 
 int main(void) {
-    setbuf(stdout, NULL);
-    srand(time(NULL));
+    setbuf(stdout, NULL); // remove input buffer for print compatibility on Linux
+    srand(time(NULL)); // set a randomization seed for bot implementations
 
     int** board = allocBoard(ROWS, COLS);
     if (!board)
@@ -77,7 +77,7 @@ int main(void) {
                     }
                 }
 
-                colInput = (botDifficulty == 1 ? easyBot(numValid, 1, validColumns) : mediumBot(board, COLS, ROWS, 1, validColumns, numValid));
+                colInput = (botDifficulty == 1 ? easyBot(numValid, 1, validColumns) : mediumBot(board, ROWS, COLS, 1, validColumns, numValid));
                 printf("Bot (Player %c) chooses column %d\n", playerChar, colInput);
             } else {
                 printf("Player %c, choose column (1-%d): ", playerChar, COLS);
