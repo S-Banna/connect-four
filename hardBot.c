@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include "checkWin.h"
 
-#define MAX_DEPTH 7   // Increased depth for stronger play
+#define MAX_DEPTH 7   // increase for harder and slower bot, 6/7/8 is sweetspot for fun and difficulty
 #define WIN_SCORE 1000000
 #define LOSS_SCORE -1000000
 
