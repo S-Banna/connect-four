@@ -1,7 +1,7 @@
 CC = gcc
 CFLAGS = -Wall -Werror
 TARGET = app
-SRC = main.c checkWin.c easyBot.c mediumBot.c
+SRC = main.c checkWin.c easyBot.c mediumBot.c hardBot.c
 
 $(TARGET): $(SRC)
 	$(CC) $(CFLAGS) -o $(TARGET) $(SRC)

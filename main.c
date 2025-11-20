@@ -4,6 +4,8 @@
 #include "checkWin.h"
 #include "easyBot.h"
 #include "mediumBot.h"
+#include "hardBot.h"
+
 #define ROWS 6
 #define COLS 7
 
@@ -48,6 +50,9 @@ int main(void) {
                 } else if (botDiffChoice == 'm' || botDiffChoice == 'M') {
                     botDifficulty = 2;
                     printf("Medium bot selected.\n");
+                } else if (botDiffChoice == 'h' || botDiffChoice == 'H') {
+                    botDifficulty = 3;
+                    printf("Hard bot selected.\n");
                 } else {
                     botDifficulty = 1;
                     printf("Invalid choice. Defaulting to easy bot.\n");
@@ -77,7 +82,9 @@ int main(void) {
                     }
                 }
 
-                colInput = (botDifficulty == 1 ? easyBot(numValid, 1, validColumns) : mediumBot(board, ROWS, COLS, 1, validColumns, numValid));
+                colInput = (botDifficulty == 1 ? easyBot(numValid, 1, validColumns) : 
+                    (botDifficulty == 2 ? mediumBot(board, ROWS, COLS, 1, validColumns, numValid) : 
+                        hardBot(board, ROWS, COLS, currentPlayer)));
                 printf("Bot (Player %c) chooses column %d\n", playerChar, colInput);
             } else {
                 printf("Player %c, choose column (1-%d): ", playerChar, COLS);
