@@ -37,6 +37,7 @@ int main(void) {
 
         int vsBot = 0;
         int botDifficulty = 0;
+        currentPlayer = 1;
         char botChoice, botDiffChoice;
         printf("Play against bot? (y/n): ");
         if (scanf(" %c", &botChoice) == 1 && (botChoice == 'y' || botChoice == 'Y')) {
@@ -60,13 +61,15 @@ int main(void) {
             }
         }
 
-        printf("Choose play order (go 'f'irst or 's'econd): ");
-        if (scanf(" %c", &currentPlayerInput) == 1) {
-            if (currentPlayerInput == 'f' || currentPlayerInput == 'F') currentPlayer = 1;
-            else if (currentPlayerInput == 's' || currentPlayerInput == 'S') currentPlayer = 2;
-            else {
-                currentPlayer = 1;
-                printf("Invalid input. Defaulting to go first.");
+        if (vsBot == 1) {
+            printf("Choose play order (go 'f'irst or 's'econd): ");
+            if (scanf(" %c", &currentPlayerInput) == 1) {
+                if (currentPlayerInput == 'f' || currentPlayerInput == 'F') currentPlayer = 1;
+                else if (currentPlayerInput == 's' || currentPlayerInput == 'S') currentPlayer = 2;
+                else {
+                    currentPlayer = 1;
+                    printf("Invalid input. Defaulting to go first.");
+                }
             }
         }
 
