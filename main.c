@@ -25,13 +25,13 @@ int main(void) {
         return 1;
 
     int currentPlayer;
+    char currentPlayerInput;
     int moves;
     int won;
     char again;
 
     do {
         resetBoard(board, ROWS, COLS);
-        currentPlayer = 1;
         moves = 0;
         won = 0;
 
@@ -57,6 +57,16 @@ int main(void) {
                     botDifficulty = 1;
                     printf("Invalid choice. Defaulting to easy bot.\n");
                 }
+            }
+        }
+
+        printf("Choose play order (go 'f'irst or 's'econd): ");
+        if (scanf(" %c", &currentPlayerInput) == 1) {
+            if (currentPlayerInput == 'f' || currentPlayerInput == 'F') currentPlayer = 1;
+            else if (currentPlayerInput == 's' || currentPlayerInput == 'S') currentPlayer = 2;
+            else {
+                currentPlayer = 1;
+                printf("Invalid input. Defaulting to go first.");
             }
         }
 
