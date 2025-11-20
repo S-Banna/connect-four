@@ -28,21 +28,31 @@ int potentialWin(int** board, int rows, int cols, int player) {
 }
 
 typedef struct {
-    int** board;
+    int** boardCopy;
     int rows;
     int cols;
     int result;
 } WBArg;
 
+int** copyBoard(int** board, int rows, int cols) {
+    int** b = malloc(rows * sizeof(int*));
+    for (int i = 0; i < rows; i++) {
+        b[i] = malloc(cols * sizeof(int));
+        for (int j = 0; j < cols; j++)
+            b[i][j] = board[i][j];
+    }
+    return b;
+}
+
 void* runFind(void* arg) {
     WBArg* a = arg;
-    a->result = potentialWin(a->board, a->rows, a->cols, 2);
+    a->result = potentialWin(a->boardCopy, a->rows, a->cols, 2);
     return NULL;
 }
 
 void* runBlock(void* arg) {
     WBArg* a = arg;
-    a->result = potentialWin(a->board, a->rows, a->cols, 1);
+    a->result = potentialWin(a->boardCopy, a->rows, a->cols, 1);
     return NULL;
 }
 
@@ -50,14 +60,20 @@ int mediumBot(int** board, int rows, int cols, int player, int* validColumns, in
     static int seenFirstThreat = 0;
 
     pthread_t t1, t2;
-    WBArg a1 = { board, rows, cols, 0 };
-    WBArg a2 = { board, rows, cols, 0 };
+    WBArg a1 = { copyBoard(board, rows, cols), rows, cols, 0 };
+    WBArg a2 = { copyBoard(board, rows, cols), rows, cols, 0 };
 
     pthread_create(&t1, NULL, runFind, &a1);
     pthread_create(&t2, NULL, runBlock, &a2);
 
     pthread_join(t1, NULL);
     pthread_join(t2, NULL);
+
+    for (int i = 0; i < rows; i++) free(a1.boardCopy[i]);
+    free(a1.boardCopy);
+
+    for (int i = 0; i < rows; i++) free(a2.boardCopy[i]);
+    free(a2.boardCopy);
 
     int winCol = a1.result;
     if (winCol != 0) {
