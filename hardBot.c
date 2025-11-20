@@ -1,7 +1,51 @@
 #include <limits.h>
+#include <stdio.h>
+#include <string.h>
 #include "checkWin.h"
 
-#define MAX_DEPTH 6   // modify as needed, 6 is sweet spot for difficulty and time
+#define MAX_DEPTH 7   // modify as needed, 6 or 7 is sweet spot for difficulty and time
+
+void encodeBoard(int** board, int rows, int cols, char* out, int botPlayer) {
+    int idx = 0;
+
+    for (int c = 0; c < cols; c++) {            // left -> right
+        for (int r = 0; r < rows; r++) {        // bottom -> top
+            int cell = board[rows - 1 - r][c];  // flip row
+
+            if (cell == 0) out[idx++] = 'b';
+            else if (cell == botPlayer) out[idx++] = 'x';
+            else out[idx++] = 'o';
+        }
+    }
+
+    out[idx] = '\0';
+}
+
+int checkCSVDirect(const char* csvFile, const char* key) {
+    FILE* f = fopen(csvFile, "r");
+    if (!f) return 9999; 
+
+    char line[256];
+    while (fgets(line, sizeof(line), f)) {
+        // must be 42 chars for board + label
+        if (strlen(line) < 42) continue;
+
+        // compare first 42 chars
+        if (strncmp(line, key, 42) == 0) {
+            // find last token (win/loss/draw)
+            char* result = line + 42;
+
+            if (strstr(result, "win"))  { fclose(f); return +1; }
+            if (strstr(result, "loss")) { fclose(f); return -1; }
+            // draw -> return 0
+            fclose(f);
+            return 0;
+        }
+    }
+
+    fclose(f);
+    return 9999;   // code for "not found"
+}
 
 static int evaluateBoard(int** board, int rows, int cols, int botPlayer);
 static int minimax(int** board, int rows, int cols, int depth,
@@ -125,10 +169,23 @@ static int evaluateBoard(int** board, int rows, int cols, int botPlayer) {
     return score;
 }
 
-static int minimax(
-    int** board, int rows, int cols, int depth,
-    int maximizingPlayer, int botPlayer,
-    int alpha, int beta) {
+static int minimax(int** board, int rows, int cols, int depth, int maximizingPlayer, int botPlayer, int alpha, int beta) {
+    
+    if (depth >= MAX_DEPTH - 1) { // only cross reference csv on first two depths, otherwise
+        char key[64];             // too far from current game state and takes too long
+        encodeBoard(board, rows, cols, key, botPlayer);
+
+        int csvResult = checkCSVDirect("connect-4.csv", key);
+
+        if (csvResult != 9999) {
+            printf("slam (%d)\n", csvResult);
+
+            if (csvResult == +1)  return  999999;
+            if (csvResult == -1)  return -999999;
+            // draw -> ignore (continue heuristic)
+        }
+    }
+
     int opp = (botPlayer == 1) ? 2 : 1;
 
     if (depth == 0)
