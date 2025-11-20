@@ -1,8 +1,31 @@
 #include <stdlib.h>
-#include <pthread.h>
 #include "mediumBot.h"
 #include "easyBot.h" // uses easyBot's implementation of random when no blocks/wins available
 #include "checkWin.h"
+
+int potentialWin(int** board, int rows, int cols, int player) {
+    for (int col = 0; col < cols; col++) {
+        int row = -1;
+        for (int r = rows - 1; r >= 0; r--) {
+            if (board[r][col] == 0) {
+                row = r;
+                break;
+            }
+        }
+        if (row == -1) {
+            continue;
+        }
+        board[row][col] = player;
+        
+        if (checkWin(board, row, col, player, rows, cols)) {
+            board[row][col] = 0;
+            return col + 1;
+        }
+        board[row][col] = 0;
+    }
+    
+    return 0; 
+}
 
 typedef struct {
     int** board;
